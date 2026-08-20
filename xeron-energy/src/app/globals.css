@@ -1,0 +1,312 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Xeron Energy — Design System (Tailwind v4)                         */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Core surfaces — near-pure black */
+  --color-void: #050506;
+  --color-ink: #08090b;
+  --color-graphite: #0d0e11;
+  --color-slate-panel: #131418;
+
+  /* Brand — pure electric blue (from the Xeron logo) on black */
+  --color-solar: #0090f0; /* primary electric blue (kept name for accent role) */
+  --color-solar-bright: #3aa9ff;
+  --color-ember: #00c2ff; /* bright electric cyan-blue (accent, no orange) */
+  --color-ember-bright: #5cd6ff;
+  --color-flux: #18a8f0; /* light electric blue */
+  --color-volt: #38bdf8; /* sky highlight (savings) */
+  --color-halo: #5b8def; /* soft indigo-blue */
+  --color-charcoal: #303048;
+
+  /* Text */
+  --color-frost: #f5f8ff;
+  --color-mist: #aeb8cc;
+  --color-muted-ink: #6c7590;
+
+  /* Fonts wired via next/font variables */
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion */
+  --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo: cubic-bezier(0.87, 0, 0.13, 1);
+
+  /* Radii */
+  --radius-xl2: 1.75rem;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                              */
+/* ------------------------------------------------------------------ */
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  border-color: color-mix(in oklab, var(--color-frost) 8%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-frost);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-solar) 35%, transparent);
+  color: var(--color-frost);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--color-flux), var(--color-solar));
+  border-radius: 999px;
+  border: 2px solid var(--color-void);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                         */
+/* ------------------------------------------------------------------ */
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 84rem;
+  padding-inline: 1.25rem;
+}
+
+@utility glass {
+  background: color-mix(in oklab, var(--color-frost) 4%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--color-frost) 10%, transparent);
+}
+
+@utility glass-strong {
+  background: color-mix(in oklab, var(--color-frost) 7%, transparent);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid color-mix(in oklab, var(--color-frost) 14%, transparent);
+}
+
+@utility text-aurora {
+  background: linear-gradient(100deg, var(--color-solar-bright), var(--color-solar) 70%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility text-gold {
+  background: linear-gradient(120deg, var(--color-flux), var(--color-solar) 55%, var(--color-ember));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility glow-solar {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--color-solar) 40%, transparent),
+    0 10px 40px -10px color-mix(in oklab, var(--color-solar) 55%, transparent);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Decorative helpers                                               */
+/* ------------------------------------------------------------------ */
+
+.container-x {
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 2rem;
+  }
+}
+
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: transform;
+}
+
+.grid-overlay {
+  background-image: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-frost) 4%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-frost) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 78%);
+}
+
+.sheen {
+  position: relative;
+}
+.sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    130deg,
+    color-mix(in oklab, var(--color-solar) 60%, transparent),
+    transparent 40%,
+    color-mix(in oklab, var(--color-flux) 45%, transparent)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-cinema);
+  pointer-events: none;
+}
+.sheen:hover::before {
+  opacity: 1;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.animate-floaty {
+  animation: floaty 7s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(6%, -8%) scale(1.15);
+  }
+  66% {
+    transform: translate(-8%, 6%) scale(0.92);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+.animate-drift {
+  animation: drift 22s ease-in-out infinite;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+.cursor-dot {
+  width: 7px;
+  height: 7px;
+  background: var(--color-frost);
+}
+.cursor-ring {
+  width: 38px;
+  height: 38px;
+  border: 1px solid color-mix(in oklab, var(--color-frost) 60%, transparent);
+  transition: width 0.25s var(--ease-cinema), height 0.25s var(--ease-cinema),
+    background 0.25s var(--ease-cinema);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .animate-marquee,
+  .animate-floaty,
+  .animate-drift {
+    animation: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-solar);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
